@@ -1,0 +1,148 @@
+<style>
+  .greeting {
+    font-size: 24px;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .turtle-image {
+    display: block;
+    margin: 20px auto;
+    width: 30%;
+    max-width: 300px;
+    height: auto;
+  }
+  .button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .button:hover {
+    transform: scale(1.05);
+    background-color: #367b37;
+  }
+  .button.ignore {
+    background-color: #f44336;
+  }
+  .button.ignore:hover {
+    background-color: #d32f2f;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 100px;
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation-duration: 0.4s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greeting Turtle</title>
+</head>
+<body>
+  <div class="greeting">Hello, I'm a turtle, I'm very hungry</div>
+
+  <!--Here we insert a link to the picture from AWS S3.-->
+  <img
+    src="https://codefinity-content-media-v2.s3.eu-west-1.amazonaws.com/courses/1118a13a-0288-43c5-8ff9-d51da25c903e/Section2/codefinity-aws-tutor/turtle.png"
+    alt="Hungry Turtle"
+    class="turtle-image"
+  />
+
+  <div class="buttons-container">
+    <button class="button feed">Feed</button>
+    <button class="button ignore">Ignore</button>
+  </div>
+
+  <div id="feedModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Thank you very much!</p>
+    </div>
+  </div>
+
+  <div id="ignoreModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Why?</p>
+    </div>
+  </div>
+
+  <script>
+    let feedModal = document.getElementById('feedModal');
+    let ignoreModal = document.getElementById('ignoreModal');
+
+    let btnFeed = document.getElementsByClassName('feed')[0];
+    let btnIgnore = document.getElementsByClassName('ignore')[0];
+
+    let spans = document.getElementsByClassName('close');
+
+    btnFeed.onclick = function () {
+      feedModal.style.display = 'block';
+    };
+    btnIgnore.onclick = function () {
+      ignoreModal.style.display = 'block';
+    };
+
+    for (var i = 0; i < spans.length; i++) {
+      spans[i].onclick = function () {
+        feedModal.style.display = 'none';
+        ignoreModal.style.display = 'none';
+      };
+    }
+
+    window.onclick = function (event) {
+      if (event.target == feedModal || event.target == ignoreModal) {
+        feedModal.style.display = 'none';
+        ignoreModal.style.display = 'none';
+      }
+    };
+  </script>
+</body>
